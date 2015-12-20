@@ -1,1 +1,92 @@
 @import "seattletimes";
+
+.ad {
+  text-align: center;
+  padding: 20px 0;
+}
+
+h1 {
+  text-align: center;
+}
+
+.feature-player {
+  font-family: @df-sans;
+}
+
+.aspect-outer {
+  width: 100%;
+  position: relative;
+  
+  .aspect-inner {
+    height: 0;
+    padding-bottom: percentage(9 / 16);
+  }
+  
+  #player {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.playlist-controls {
+  max-width: 600px;
+  margin: auto;
+}
+
+.choose-playlist {
+  display: block;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  
+  .playlist {
+    width: 50%;
+    border-bottom: 4px solid white;
+    float: left;
+    text-align: center;
+    cursor: pointer;
+    
+    &:hover {
+      border-bottom-color: @df-light-gray;
+    }
+    
+    &.active {
+      border-bottom-color: @df-blue;
+    }
+  }
+}
+
+.playlist-container {
+  
+  background-image: linear-gradient(to bottom, #EEE, white 10%, white 90%, #EEE 100%);
+  
+  .playlist {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    
+    &::after {
+      display: block;
+      clear: both;
+      content: "";
+    }
+  }
+  
+  .playlist-item {
+    display: inline-block;
+    width: 25%;
+    vertical-align: top;
+    padding: 16px;
+    font-size: 14px;
+    text-align: center;
+    cursor: pointer;
+    
+    .image-frame {
+      img { width: 100% }
+    }
+  }
+}

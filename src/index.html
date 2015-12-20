@@ -8,8 +8,14 @@
     <%= t.include("partials/_head.html") %>
   </head>
   <body>
+  
+    <%= t.include("partials/_nav.html") %>
+    
+    <%= t.include("partials/_ad.html", { type: "banner" }) %>
+    
+    <h1>Videos of the year 2015</h1>
 
-    <div class="cuisine-player">
+    <div class="feature-player">
       <div class="video-container aspect-outer pending">
         <div class="aspect-inner">
           <video
@@ -22,12 +28,16 @@
         </div>
       </div>
       <hr>
-      <ul class="choose-playlist">
-        <li data-playlist="4663810165001">Top videos</li>
-        <li data-playlist="4664303231001">Most popular</li>
-      </ul>
-      <div class="playlist-container"></div>
+      <div class="playlist-controls">
+        <ul class="choose-playlist">
+          <li data-playlist="4663810165001" class="playlist active">Top videos</li>
+          <li data-playlist="4664303231001" class="playlist">Most popular</li>
+        </ul>
+        <div class="playlist-container"></div>
+        </div>
     </div>
+    
+    <%= t.include("partials/_navBottom.html") %>
 
     <script src="app.js" async></script>
     <% if (json.project.production) { %>

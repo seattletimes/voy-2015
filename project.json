@@ -1,20 +1,20 @@
 {
   "s3": {
     "stage": {
-      "bucket": "",
-      "path": ""
+      "bucket": "projects-staging.seattletimes.com",
+      "path": "mutable-crackling"
     },
     "live": {
       "bucket": "",
       "path": ""
     }
   },
-  "title": "",
+  "title": "Videos of the year 2015",
   "description": "",
-  "url": "",
+  "url": "https://projects.seattletimes.com/2015/videos-of-the-year/",
   "slug": "",
   "tags": [],
   "image": "assets/social.jpg",
   "production": false,
-  "embedded": true
+  "embedded": false
 }
