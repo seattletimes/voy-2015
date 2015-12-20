@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+  <head>
+    <title><%= json.project.title %></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <%= t.include("partials/_head.html") %>
+  </head>
+  <body>
+
+    <div class="cuisine-player">
+      <div class="video-container aspect-outer pending">
+        <div class="aspect-inner">
+          <video
+            data-account="1509317113"
+            data-player="default"
+            data-embed="default"
+            id="player"
+            class="video-js" controls>
+          </video>
+        </div>
+      </div>
+      <hr>
+      <ul class="choose-playlist">
+        <li data-playlist="4663810165001">Top videos</li>
+        <li data-playlist="4664303231001">Most popular</li>
+      </ul>
+      <div class="playlist-container"></div>
+    </div>
+
+    <script src="app.js" async></script>
+    <% if (json.project.production) { %>
+    <%= !json.project.embedded ? t.include("partials/_foot.html") : "" %>
+    <%= t.include("partials/_workHere.html") %>
+    <% } %>
+  </body>
+</html>
