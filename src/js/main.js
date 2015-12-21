@@ -26,11 +26,13 @@ ready(function(player) {
   window.player = player;
   
   var playlistCache = {};
+  var lookup = {};
   
   var retrievePlaylist = function(id, callback) {
     if (playlistCache[id]) return callback(playlistCache[id]);
     player.catalog.getPlaylist(id, function(err, playlist) {
       playlistCache[id] = playlist;
+      playlist.forEach((v, i) => lookup[v.id] = v);
       callback(playlist);
     });
   };
@@ -38,6 +40,7 @@ ready(function(player) {
   var loadPlaylist = function(id) {
     retrievePlaylist(id, function(playlist) {
       playlistContainer.innerHTML = playlistTemplate(playlist);
+      playlistContainer.classList.remove("loading");
       player.catalog.load(playlist);
     });
   };
@@ -47,46 +50,42 @@ ready(function(player) {
   var onClickPlaylist = function() {
     var id = this.getAttribute("data-playlist");
     playlistContainer.innerHTML = "Loading playlist...";
+    playlistContainer.classList.add("loading");
+    document.querySelector(".choose-playlist .active").classList.remove("active");
+    this.classList.add("active");
     loadPlaylist(id);
   };
   
   qsa(".choose-playlist li").forEach(el => el.addEventListener("click", onClickPlaylist));
 
-  // player.catalog.getPlaylist(playlistID, function(err, playlist) {
-  //   playlist.forEach(p => p.caption = ids[p.id]);
-  //   playlistContainer.innerHTML = playlistTemplate(playlist);
-  //   player.catalog.load(playlist);
 
-  //   var lookup = {};
-  //   playlist.forEach((v, i) => lookup[v.id] = v);
+  playlistContainer.addEventListener("click", function(e) {
+    if (playlistContainer.getAttribute("data-enabled") == "false") return;
+    var li = closest(e.target, "playlist-item");
+    var id = li.getAttribute("data-id");
+    var index = player.playlist.indexOf(lookup[id]);
+    window.location = "#player";
+    player.playlist.currentItem(index);
+    player.play();
+  });
 
-  //   playlistContainer.addEventListener("click", function(e) {
-  //     if (playlistContainer.getAttribute("data-enabled") == "false") return;
-  //     var li = closest(e.target, "playlist-item");
-  //     var id = li.getAttribute("data-id");
-  //     var index = player.playlist.indexOf(lookup[id]);
-  //     window.location = "#player";
-  //     player.playlist.currentItem(index);
-  //     player.play();
-  //   });
+  var update = function(e) {
+    console.log("update", player.ads.state, player.mediainfo);
+    if (e.type == "play") videoContainer.classList.remove("pending");
+    var active = document.querySelector("li.playlist-item.active");
+    if (active) active.classList.remove("active");
+    var playingAd = player.ads.state == "ad-playback";
+    playlistContainer.setAttribute("data-enabled", !playingAd);
+    if (playingAd) return;
+    playlistContainer.classList.add("enabled");
+    if (player.paused()) return;
+    var id = player.mediainfo.id;
+    var li = document.querySelector(`li[data-id="${id}"]`);
+    if (li) {
+      li.classList.add("active");
+    }
+  };
 
-  //   var update = function(e) {
-  //     if (e.type == "play") videoContainer.classList.remove("pending");
-  //     var active = document.querySelector("li.playlist-item.active");
-  //     if (active) active.classList.remove("active");
-  //     var playingAd = player.ads.state == "ad-playback";
-  //     playlistContainer.setAttribute("data-enabled", !playingAd);
-  //     if (playingAd) return;
-  //     playlistContainer.classList.add("enabled");
-  //     if (player.paused()) return;
-  //     var id = player.mediainfo.id;
-  //     var li = document.querySelector(`li[data-id="${id}"]`);
-  //     if (li) {
-  //       li.classList.add("active");
-  //     }
-  //   };
+  "play playing blocked adstart adend loadstart loadedmetadata loadeddata".split(" ").forEach(e => player.on(e, update));
 
-  //   "play playing blocked adstart adend loadstart loadedmetadata loadeddata".split(" ").forEach(e => player.on(e, update));
-
-  // });
 });
