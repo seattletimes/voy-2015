@@ -60,7 +60,11 @@ ready(function(player) {
 
 
   playlistContainer.addEventListener("click", function(e) {
+    //don't play videos on story links
+    if (e.target.classList.contains("story-link")) return;
+    //don't play if we're in an ad state
     if (playlistContainer.getAttribute("data-enabled") == "false") return;
+
     var li = closest(e.target, "playlist-item");
     var id = li.getAttribute("data-id");
     var index = player.playlist.indexOf(lookup[id]);
@@ -70,7 +74,6 @@ ready(function(player) {
   });
 
   var update = function(e) {
-    console.log("update", player.ads.state, player.mediainfo);
     if (e.type == "play") videoContainer.classList.remove("pending");
     var active = document.querySelector("li.playlist-item.active");
     if (active) active.classList.remove("active");

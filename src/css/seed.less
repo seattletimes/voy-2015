@@ -42,20 +42,26 @@ h1 {
   padding: 0;
   margin: 0;
   overflow: hidden;
+  border-bottom: 4px solid @df-dark-gray;
   
   .playlist {
     width: 50%;
-    border-bottom: 4px solid white;
+    border-style: solid;
+    border-color: @df-light-gray;
+    border-width: 1px 1px 0 1px;
     float: left;
     text-align: center;
     cursor: pointer;
+    color: @df-middle-gray;
     
     &:hover {
-      border-bottom-color: @df-light-gray;
+      color: black;
     }
     
     &.active {
-      border-bottom-color: @df-blue;
+      border-color: @df-dark-gray;
+      color: black;
+      box-shadow: 0 0 8px rgba(0, 0, 0, .6);
     }
   }
 }
@@ -72,7 +78,7 @@ h1 {
       height: 100%;
       background: rgba(255, 255, 255, .8);
       content: "Playing advertisement, please wait";
-      padding: 80px 0;
+      padding: 40px 0;
       text-align: center;
     }
   }
