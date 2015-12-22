@@ -5,16 +5,16 @@
       "path": "mutable-crackling"
     },
     "live": {
-      "bucket": "",
-      "path": ""
+      "bucket": "projects.seattletimes.com",
+      "path": "2015/videos-of-the-year"
     }
   },
   "title": "Videos of the year 2015",
-  "description": "",
+  "description": "Watch some of our favorite and most popular Seattle Times video stories",
   "url": "https://projects.seattletimes.com/2015/videos-of-the-year/",
   "slug": "",
   "tags": [],
-  "image": "assets/social.jpg",
-  "production": false,
+  "image": "assets/social2.jpg",
+  "production": true,
   "embedded": false
 }
